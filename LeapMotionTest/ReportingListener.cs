@@ -7,11 +7,18 @@ using Leap;
 
 namespace LeapMotionTest
 {
-    class MyListener : Listener
+    public class ReportingListener : Listener
     {
         private long currentTime,
                      previousTime,
                      timeChange;
+
+        private Reporter reporter;
+
+        public ReportingListener(Reporter reporter)
+        {
+            this.reporter = reporter;
+        }
 
         public override void OnInit(Controller ctrl)
         {
@@ -24,7 +31,6 @@ namespace LeapMotionTest
             base.OnConnect(ctrl);
             Console.WriteLine("Connected");
         }
-
 
         public override void OnDisconnect(Controller ctrl)
         {
@@ -67,9 +73,6 @@ namespace LeapMotionTest
             float xScreenIntersect = screen.Intersect(finger, true).x;
             float yScreenIntersect = screen.Intersect(finger, true).y;
 
-            if (xScreenIntersect.ToString() == "NaN")
-                return;
-
             float x = xScreenIntersect * screen.WidthPixels;
             float y = screen.HeightPixels - (yScreenIntersect * screen.HeightPixels);
 
@@ -84,7 +87,7 @@ namespace LeapMotionTest
                 TipVelocity = tipVelocity
             };
 
-            Reporter.PrintResult(result);
+            this.reporter.PrintResult(result);
             previousTime = currentTime;
         }
     }
