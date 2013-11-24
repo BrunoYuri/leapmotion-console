@@ -4,7 +4,7 @@ namespace LeapMotionTest
 {
     public class Reporter
     {
-        public void PrintResult(Result result)
+        public void Print(Result result)
         {
             Console.WriteLine("Screen intersect x: {0}", result.XIntersect);
             Console.WriteLine("Screen intersect y: {0}", result.YIntersect);

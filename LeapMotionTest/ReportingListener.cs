@@ -68,6 +68,7 @@ namespace LeapMotionTest
 
             Vector vector = screen.Intersect(finger, true);
 
+            //x and y positions are sometimes returned as NaN (e.g. if hand is partly obscured by screen)
             if (float.IsNaN(vector.x) || float.IsNaN(vector.y))
                 return;
 
@@ -88,7 +89,7 @@ namespace LeapMotionTest
                 TipVelocity = tipVelocity
             };
 
-            this.reporter.PrintResult(result);
+            this.reporter.Print(result);
             previousTime = currentTime;
         }
     }
