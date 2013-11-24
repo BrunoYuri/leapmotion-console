@@ -22,25 +22,21 @@ namespace LeapMotionTest
 
         public override void OnInit(Controller ctrl)
         {
-            base.OnConnect(ctrl);
             Console.WriteLine("Device initialised");
         }
 
         public override void OnConnect(Controller ctrl)
         {
-            base.OnConnect(ctrl);
             Console.WriteLine("Connected");
         }
 
         public override void OnDisconnect(Controller ctrl)
         {
-            base.OnDisconnect(ctrl);
             Console.WriteLine("Disconnected");
         }
 
         public override void OnExit(Controller ctrl)
         {
-            base.OnExit(ctrl);
             Console.WriteLine("Exited");
         }
 
@@ -70,8 +66,13 @@ namespace LeapMotionTest
             if (screen == null || !screen.IsValid || tipVelocity <= 25)
                 return;
 
-            float xScreenIntersect = screen.Intersect(finger, true).x;
-            float yScreenIntersect = screen.Intersect(finger, true).y;
+            Vector vector = screen.Intersect(finger, true);
+
+            if (float.IsNaN(vector.x) || float.IsNaN(vector.y))
+                return;
+
+            float xScreenIntersect = vector.x;
+            float yScreenIntersect = vector.y;
 
             float x = xScreenIntersect * screen.WidthPixels;
             float y = screen.HeightPixels - (yScreenIntersect * screen.HeightPixels);
